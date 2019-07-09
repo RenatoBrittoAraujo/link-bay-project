@@ -1,6 +1,7 @@
 # Link Bay
 
 Deployed to heroku at: https://fierce-depths-20461.herokuapp.com/
+
 Original repository: https://gitlab.com/link-bay-project/link-bay
 
 ## About the project
