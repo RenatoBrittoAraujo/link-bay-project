@@ -1,0 +1,170 @@
+<h1 class="text-center"><%= @user.nick.capitalize + "'s" %> Profile</h1>
+
+<div class="row mt-3 border p-3">
+
+	<div class="col-6" style="height:200px;">
+		<img src="<%= (!@user.image_link.nil? && !@user.image_link.empty?) ? 
+			@user.image_link : empty_user_image %>" class="rounded mx-auto d-block img-fluid"
+			style="width:auto;max-height:100%;">
+	</div>
+
+	<div class="container col-6 col" style="height:200px;">
+
+		<div id="list" class="row">
+			<div class="table-responsive table-borderless col-md-12">
+			
+				<table class="table" cellspacing="0" cellpadding="0">
+					<tbody>
+						<tr>
+							<td class="text-muted">Name:</td>
+							<td><%= @user.name%></td>
+						</tr>
+						<tr>
+							<td class="text-muted">Email:</td>
+							<td><%= @user.email%></td>
+						</tr>
+						<tr>
+							<td class="text-muted">Nick:</td>
+							<td><%= @user.nick%></td>
+						</tr>
+						<tr>
+							<td class="text-muted">Position:</td>
+							<td><%= @user.admin? ? 'Administrator' : 'User' %></td>
+						</tr>
+						<tr>
+							<td class="text-muted">Joined:</td>
+							<td><%= @user.created_at.strftime("%-d/%-m/%y") %></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<% if current_user == @user || (current_user && current_user.admin) %>
+		<div class="col d-flex justify-content-<%= (current_user && @valid_friendship) ?  "left" : "center" %> mt-4">
+			<%= button_to 'Edit profile', edit_user_path(@user), method: :get, class: "btn btn-primary"%>
+		</div>
+	<% end %>
+	<% if current_user && @valid_friendship %>
+		<div class="mt-4 col">
+			<%= bootstrap_form_for :friendship, url: '/friendships' do |f| %>
+				<%= f.hidden_field :sender_id, value: current_user.id %>
+				<%= f.hidden_field :receiver_id, value:	@user.id %>
+				<div class="text-<%= (current_user == @user || (current_user && current_user.admin)) ?  "right" : "center" %>">
+					<%= f.submit 'Send friendship request', class: 'btn btn-primary' %>
+				</div>
+			<% end %>
+		</div>
+	<% end %>
+</div>
+
+<% if @user.summary %>
+	<div class="container mt-3">
+		<hr />
+		<h4 class="text-center">Bio</h4>
+			<div class="text-center">
+				<%= @user.summary %>
+			</div>
+		<hr />
+	</div>
+<% end %>
+
+<% if current_user == @user && !@requested_friendships.empty? %>
+	<div class="container mt-3">
+		<h4 class="text-center"> Friendship requests: </h4>
+		<table class="table" cellspacing="0" cellpadding="0">
+			<tbody>
+				<tr>
+				<% @requested_friendships.each do |friendship| %>
+						<td class="row">
+							
+							<div class="col-8">
+								<h5>
+									<%= friendship.sender.nick %>
+								</h5>
+							</div>
+
+							<div class="col-2">
+								<%= bootstrap_form_for :friendship, url: '/friendships/accept' do |f| %>
+									<%= f.hidden_field :sender_id, value: @user.id %>
+									<%= f.hidden_field :friendship_id, value: friendship.id %>
+									<%= f.submit 'Accept', class: 'btn btn-sm float-right text-white' %>
+								<% end %>
+							</div>
+							
+							<div class="col-2">
+								<%= bootstrap_form_for :friendship, url: '/friendships/reject' do |f| %>
+									<%= f.hidden_field :friendship_id, value: friendship.id %>
+									<%= f.hidden_field :receiver_id, value:	current_user.id %>
+									<%= f.submit 'Reject', class: 'btn btn-sm float-right text-white' %>
+								<% end %>
+							</div>
+						</td>
+					<% end %>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+<% end %>
+
+<div class="container mt-5">
+	<h4 class="text-center"> <%= @user.nick.capitalize %>'s friends: </h4>
+
+	<table class="table" cellspacing="0" cellpadding="0">
+		<tbody>
+			<% if @friends.empty? %>
+				<tr><td class="text-center">No friends found</td></tr>
+			<% end %>
+			<% @friends.each do |friendship| %>
+			<tr>
+				<td>
+					<div class="row">
+						<% target_user = friendship.sender %>
+						<% if friendship.sender == @user %>
+							<% target_user = friendship.receiver %>
+						<% end %>
+						<div class="col <%= (@user == current_user || target_user == current_user) ? "text-left" : "text-center" %>">
+							<a href="<%= user_path(target_user) %>" class=" no-text-decoration">
+								<h6>
+									<%= target_user.nick %>
+								</h6>
+							</a>
+						</div>
+						<% if @user == current_user || target_user == current_user %>
+							<div class="col text-right">
+								<%= button_to 'End friendship', friendship, :class => "btn btn-sm text-white", :method => :delete %>
+							</div>
+						<% end %>
+					</div>
+				</td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
+
+<div class="container mt-5">
+	<h4 class="text-center"> <%= @user.nick.capitalize %>'s posts: </h4>
+
+	<table class="table" cellspacing="0" cellpadding="0">
+		<tbody>
+			<% @posts.each do |post| %>
+			<tr>
+				<td>
+						<a href="<%= post_path(post) %>" class="no-text-decoration">
+							<div class=" p-0">
+								<h6 class="text-center">
+									<%= post.title %>
+								</h6>
+							</div>
+						</a>
+					</div>
+				</td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

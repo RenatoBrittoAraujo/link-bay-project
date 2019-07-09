@@ -1,0 +1,19 @@
+<div class="text-center">
+	<h2>Create a new post</h2>
+	<p>Remeber to follow our rules for posting</p>
+
+	<%= bootstrap_form_for(@post, class: 'text-right') do |f| %>
+		<%= f.text_field :title %>
+		<%= f.text_field :digest, label: 'Post description (140 characters)' %>
+		<%= f.text_area :body %>
+		<%= f.select :category_id, Category.all.collect { |cat| [cat.name, cat.id] } %>
+		<%= f.text_field :image_link, label: 'Post image (URL)' %>
+		<div class="d-flex justify-content-center col">
+			<%= f.submit "Submit post", class: ' btn btn-success' %>
+		</div>
+	<% end %>
+
+	<div class="d-flex justify-content-center">
+		<%= button_to 'Go back', root_path , :class => "btn btn-primary mt-3", :method => :get %>
+	</div>
+</div>

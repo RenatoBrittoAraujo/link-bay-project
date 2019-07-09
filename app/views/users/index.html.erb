@@ -1,0 +1,27 @@
+<h1 class="text-center">Admin panel</h1>
+
+<div class="text-center">
+  <%= button_to 'Categories', categories_path, class: 'btn btn-primary', method: :get %>
+</div>
+
+<table class="table mt-3">
+  <thead>
+    <tr>
+      <td><b>Name</b></td>
+      <td><b>Permissions</b></td>
+      <td><b>Nickname</b></td>
+      <td></td><td></td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.admin ? 'Admin' : 'User' %></td>
+        <td><%= user.nick %></td>
+        <td><%= button_to 'Profile', user, method: :get, class: 'btn btn-primary btn-sm' %></td>
+        <td><%= button_to 'Ban', user, method: :delete, data: { confirm: "Are you sure you want to delete this user's account?" }, class: 'btn btn-primary btn-sm' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

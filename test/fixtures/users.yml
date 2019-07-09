@@ -1,0 +1,28 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  email: joao@gmail.com
+  password_digest: <%= BCrypt::Password.create('secret123') %>
+  name: Joao da Silva
+  summary: Sou Joao e tenho 12 anos
+  admin: false
+  nick: joaozin
+  id: 1
+
+two:
+  email: carlin@gmail.com
+  password_digest: <%= BCrypt::Password.create('secret123') %>
+  name: Carlos Henrique
+  summary: Sou Carlos e tenho 69 anos
+  admin: true
+  nick: carlinpedo
+  id: 2
+
+three:
+  email: policiafederal@gmail.com
+  password_digest: <%= BCrypt::Password.create('secret123') %>
+  name: Policia Federal
+  summary: Sou a policia federal e fui fundada na constrituição de 1988
+  admin: false
+  nick: comcertezanãosomosapoliciafederal
+  id: 3

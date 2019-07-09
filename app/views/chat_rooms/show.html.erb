@@ -1,0 +1,70 @@
+<h1 class="text-center">Chat with <%= @target_user.nick %></h1>
+
+<div class="container row p-0 ml-0 mt-3">
+	<div class="container col-6 p-0">
+		<%= button_to "Back to chats", '/chats', :class => "btn btn-primary float-left", :method => :get %>
+	</div>
+	<div class="container col-6 p-0">
+		<%= button_to 'See ' + @target_user.nick + "'s profile", user_path(@target_user) , :class => "btn btn-primary float-right", :method => :get %>
+	</div>
+</div>
+
+<hr/>
+
+<div class="container mt-4 p-0">
+	<%= bootstrap_form_for :message, url: '/messages/create', method: :get do |f| %>
+		<%= f.hidden_field :user_id, value: current_user.id %>
+		<%= f.hidden_field :chat_room_id, value: @chat_room.id %>
+		<div class="row">
+			<div class="col-10">
+				<%= f.text_field :body, hide_label: true, placeholder: 'Write a message' %>
+			</div>
+			<div class="col-2">
+				<%= f.submit 'Send'%>
+			</div>
+		</div>
+	<% end %>
+</div>
+
+<hr/>
+
+<div class="container mt-3">
+
+	<% @messages.each do |message| %>
+
+		<div class="row">
+
+			<% if message.user == current_user %>
+
+				<div class="col-10 mb-2 p-2 color-background-card border border-alert rounded">
+					<div class="text-left">
+						<b>You <%= ' (' +message.user.nick + ')' %></b>
+						<div class="" style="overflow:hidden">
+							<p><%= simple_format message.body %></p>
+						</div>
+					</div>		
+				</div>
+
+				<div class="container col-2"></div>
+
+			<% else %>
+
+				<div class="container col-2"></div>
+
+				<div class="col-10 mb-2 p-2 color-background-card border border-alert rounded">
+					<div class="text-right" >
+						<b><%= message.user.name + ' (' +message.user.nick + ')' %></b>
+						<div class="" style="overflow:hidden">
+							<p><%= simple_format message.body %></p>
+						</div>
+
+					</div>		
+				</div>
+
+			<% end %>
+	
+		</div>
+
+	<% end %>
+
+</div>

@@ -1,0 +1,31 @@
+<div class="text-center">
+	<h1> Chats </h1>
+</div>
+
+<div class="container border p-3">
+	<% if @friendships.empty? %>
+		<h5 class="text-center">
+			There seems to be no chats. Send friend invitations to start chatting
+		</h5>
+	<% end %>
+	<% @friendships.each do |chat| %>
+		<a href="/chats/show?id=<%= chat.chat_room.id %>" class="no-text-decoration">
+			<div class="no-text-decoration" style="color:	#585858">
+			<% if current_user == chat.sender %>
+				<%= chat.receiver.nick %>
+			<% else %>
+				<%= chat.sender.nick %>
+			<% end %>
+			<br>
+			<% unless chat.chat_room.messages.last.nil? %>
+				Last message: <i><%= chat.chat_room.messages.last.body %></i>
+			<% else %>
+				Send a message!
+			<% end %>
+			</div>
+		</a>
+		<% unless chat == @friendships.last %>
+			<hr />
+		<% end %>
+	<% end %>
+</div>

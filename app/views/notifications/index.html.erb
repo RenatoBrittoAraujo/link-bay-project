@@ -1,0 +1,21 @@
+<h1 class="text-center">Notifications</h1>
+<div class="container">
+	<% if @notifications.empty? %>
+		<h5 class="text-center mt-3">There seems to be no new notifications</h5>
+	<% end %>
+  <table class="table" cellspacing="0" cellpadding="0">
+    <tbody>
+      <% @notifications.each do |notification| %>
+        <tr>
+          <td>
+            <a href="<%= notification.link %>" class="text-muted no-text-decoration">
+              <div>
+                <%= notification.body %>
+              </div>
+            </a>
+          </td>
+        </tr> 
+      <% end %>
+    </tbody>
+  </table>
+</div>

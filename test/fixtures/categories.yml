@@ -1,0 +1,10 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: one
+  description: socorro
+
+two:
+  name: two
+  description: escrever .yml é chato dms
+

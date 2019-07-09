@@ -1,0 +1,35 @@
+<h1 class="text-center">Categories</h1>
+
+<div class="row mt-3">
+	<div class="col-4"></div>
+	<div class="col-2">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<a href="/categories/new" class="btn btn-primary"><span class="fa fa-plus fa-inverse"></span></a>
+	</div>
+	<div class="col-2s">
+		<div class="text-center">
+			<%= button_to 'Admin panel', '/admin', method: :get, class: 'btn btn-primary' %>
+		</div>
+	</div>
+	<div class="col-4"></div>
+</div>
+
+<table class="table mt-4">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th class="text-right">Options</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @categories.each do |category| %>
+      <tr>
+        <td><%= category.name %></td>
+        <td class="text-right"><%= link_to 'Delete category', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

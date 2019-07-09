@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: post1
+  body: Teri maa ki chut badi majbut
+  category: one
+
+two:
+  title: post2
+  body: This is post two
+  category: one
+
+three:
+  title: post3
+  body: Este é o post três
+  category: two
+
+four:
+  title: post4
+  body: Ich scheiß' d'rauf! 
+  category: two

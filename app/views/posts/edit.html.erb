@@ -1,0 +1,18 @@
+<div class="text-center">
+	<h2>Edit your post</h2>
+
+	<%= bootstrap_form_for(@post, class: 'text-right') do |f| %>
+		<%= f.text_field :title %>
+		<%= f.text_field :digest, label: 'Post description (140 characters)' %>
+		<%= f.text_area :body %>
+		<%= f.select :category_id, Category.all.collect { |cat| [cat.name, cat.id] } %>
+		<%= f.file_field :image, label: 'Post image' %>
+		<div class="d-flex justify-content-center col">
+			<%= f.submit "Submit post", class: ' btn btn-success' %>
+		</div>
+	<% end %>
+
+	<div class="d-flex justify-content-center">
+		<%= button_to 'Go back', post_path(@post) , :class => "btn btn-primary mt-3", :method => :get %>
+	</div>
+</div>
