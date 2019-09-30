@@ -1,5 +1,7 @@
 # Link Bay
 
+![](https://i.imgur.com/l5x9hDl.png)
+
 Deployed to heroku at: https://fierce-depths-20461.herokuapp.com/
 
 Original repository: https://gitlab.com/link-bay-project/link-bay
